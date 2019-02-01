@@ -3,7 +3,7 @@ package communication;
 /**
  * Implements a means of controlling communications
  */
-public interface ComController {
+public interface SController {
 
     /**
      * Identifies the message and reacts accordingly, then provides a response message
@@ -17,5 +17,8 @@ public interface ComController {
      * @return String "FIND" or "BYE"
      */
     String getType(String message);
+
+
+
 }
 

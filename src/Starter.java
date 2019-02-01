@@ -28,5 +28,7 @@ public class Starter {
         ArrayList<ArrayList<String>> g = i.parseArgs(inFile);
 
 
+
+
     }
 }
