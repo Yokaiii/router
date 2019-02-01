@@ -22,7 +22,7 @@ public class Neighbor implements INeighbor{
     }
 
     @Override
-    public String getAdress() {
+    public String getAddress() {
         return null;
     }
 

@@ -4,7 +4,7 @@ public interface INeighbor {
 
     public NeighborRelation getRelation();
 
-    public String getAdress();
+    public String getAddress();
 
     public SController getSController();
 
