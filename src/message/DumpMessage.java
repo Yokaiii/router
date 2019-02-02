@@ -1,10 +1,10 @@
 package message;
 
-import jdk.nashorn.api.scripting.JSObject;
-import org.json.JSONObject;
-import sun.security.x509.IPAddressName;
+import jdk.nashorn.api.scripting.*;
+import org.json.*;
+import sun.security.x509.*;
 
-import java.io.IOException;
+import java.io.*;
 
 /**
  * A class to encapsulate a dump message
@@ -27,27 +27,27 @@ public class DumpMessage extends Message {
             throw new IllegalArgumentException("Cannot create a dump message of a non-dump type.");
         }
     }
-
+    
     @Override
     JSObject getJSON() {
-        JSONObject json = new JSONObject();
-        IPAddressName ipsrc = null;
+        JSONObject    json   = new JSONObject();
+        IPAddressName ipsrc  = null;
         IPAddressName ipdest = null;
-
+        
         try {
-             ipsrc = new IPAddressName(getSource());
-             ipdest = new IPAddressName(getDest());
+            ipsrc = new IPAddressName(getSource());
+            ipdest = new IPAddressName(getDest());
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        
         JSONObject msgcontent = new JSONObject();
-
+        
         json.put("src", ipsrc.toString());
         json.put("dst", ipdest.toString());
         json.put("type", getType().toString());
         json.put("msg", msgcontent);
-
+        
         return (JSObject) json;
     }
 }

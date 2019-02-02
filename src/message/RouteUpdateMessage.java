@@ -1,11 +1,11 @@
 package message;
 
-import jdk.nashorn.api.scripting.JSObject;
-import org.json.JSONObject;
+import jdk.nashorn.api.scripting.*;
+import org.json.*;
 import routing.*;
-import sun.security.x509.IPAddressName;
+import sun.security.x509.*;
 
-import java.io.IOException;
+import java.io.*;
 
 /**
  * A class to encapsulate a route update message
@@ -42,26 +42,26 @@ public class RouteUpdateMessage extends Message {
     public ForwardingEntry getUpdate() {
         return this.update;
     }
-
+    
     @Override
     JSObject getJSON() {
         JSONObject json = new JSONObject();
-
-        IPAddressName ipsrc = null;
+        
+        IPAddressName ipsrc  = null;
         IPAddressName ipdest = null;
         IPAddressName msgntw = null;
         IPAddressName msgntm = null;
-
+        
         try {
             ipsrc = new IPAddressName(getSource());
             ipdest = new IPAddressName(getDest());
             msgntw = new IPAddressName(update.getNetworkPrefix());
             msgntm = new IPAddressName(update.getNetmask());
-
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        
         JSONObject msgcontent = new JSONObject();
         msgcontent.put("network", msgntw.toString());
         msgcontent.put("netmask", msgntm.toString());
@@ -69,14 +69,13 @@ public class RouteUpdateMessage extends Message {
         msgcontent.put("selfOrigin", update.getSelfOrigin());
         msgcontent.put("ASPath", update.getASPath());
         msgcontent.put("origin", update.getOrigin());
-
-
+        
+        
         json.put("src", ipsrc.toString());
         json.put("dst", ipdest.toString());
         json.put("type", getType().toString());
         json.put("msg", msgcontent);
-
+        
         return (JSObject) json;
     }
 }
-

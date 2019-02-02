@@ -3,6 +3,7 @@ package init;
 import neighbor.*;
 import routing.*;
 
+import java.io.*;
 import java.util.*;
 
 /**
@@ -19,7 +20,7 @@ public class SimpleInitializer implements ArgumentInitializer {
         }
         
         // Initialize a list to store the neighbors passed as arguments
-        List<Neighbor> neighbors;
+        List<Neighbor> neighbors = new ArrayList<>();
         
         // Iterate over the String argument list
         for (String arg : args) {
@@ -36,7 +37,20 @@ public class SimpleInitializer implements ArgumentInitializer {
             }
             
             // Extract the Neighbor Relation field
-            NeighborRelation rel = NeighborRelation.parseString(arg.substring(arg.indexOf("-") + 1));
+            NeighborRelation relation = NeighborRelation.parseString(arg.substring(arg.indexOf("-") + 1));
+            
+            try {
+                neighbors.add(
+                        new SimpleNeighbor(ip, relation, new SimpleController(arg.substring(0, arg.indexOf("-")))));
+            } catch (IOException e) {
+                throw new IllegalArgumentException("Could not locate the address specified.");
+            }
         }
+        try {
+            return new SimpleRouter(neighbors);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

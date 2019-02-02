@@ -1,6 +1,5 @@
 package routing;
 
-import jdk.nashorn.api.scripting.*;
 import neighbor.*;
 
 /**
@@ -62,5 +61,5 @@ public interface ForwardingEntry {
      *
      * @return the JSON representation of this entry
      */
-    JSObject dump();
+     String dump();
 }

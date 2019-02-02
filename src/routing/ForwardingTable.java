@@ -1,7 +1,5 @@
 package routing;
 
-import jdk.nashorn.api.scripting.*;
-
 import java.util.*;
 
 /**
@@ -13,13 +11,6 @@ public interface ForwardingTable {
      * Aggregates routes in the forwarding table wherever possible
      */
     void coalesce();
-    
-    /**
-     * Exports the table to a JSON, in order to be exported in a dump command
-     *
-     * @return the table in a JSON format
-     */
-    JSObject dump();
     
     /**
      * Adds the provided entry to the forwarding table
@@ -36,4 +27,11 @@ public interface ForwardingTable {
      * @return the list of all routes that will lead to the destination IP
      */
     List<ForwardingEntry> lookupRoutes(byte[] destination);
+    
+    /**
+     * Exports the table to a JSON, in order to be exported in a dump command
+     *
+     * @return the table in a JSON format
+     */
+    String dump();
 }

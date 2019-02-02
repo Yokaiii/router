@@ -1,68 +1,48 @@
 package routing;
 
-import jdk.nashorn.api.scripting.JSObject;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import sun.security.x509.IPAddressName;
+import java.util.*;
 
-import java.io.IOException;
-import java.util.List;
-
+/**
+ * A simple class to maintain the forwarding table of a router
+ */
 public class SimpleTable implements ForwardingTable {
-
-    private List<ForwardingEntry> enteries;
-
-    public SimpleTable(List<ForwardingEntry> enteries) {
-        this.enteries = enteries;
+    
+    // A list of the entries in this table
+    List<ForwardingEntry> entries;
+    
+    /**
+     * Constructs a new Forwarding Table, and initializes the entries list
+     */
+    public SimpleTable() {
+        this.entries = new ArrayList<>();
     }
-
+    
     @Override
     public void coalesce() {
-
-    }
-
-    @Override
-    public JSObject dump() {
-
-        JSONArray array = new JSONArray();
-        JSONObject dump = new JSONObject();
-
-        for (ForwardingEntry fe : enteries) {
-
-            JSONObject json = new JSONObject();
-            IPAddressName network = null;
-            IPAddressName netmask = null;
-
-            try {
-                network = new IPAddressName(fe.getNetworkPrefix());
-                netmask = new IPAddressName(fe.getNetmask());
-            } catch (IOException e) {
-                e.printStackTrace();
+    for (ForwardingEntry entry1 : this.entries) {
+        for (ForwardingEntry entry2 : this.entries) {
+            // Skip the coalesce if these are the same entry
+            if (entry1.equals(entry2)) {
+                continue;
             }
-
-            json.put("network", network.toString());
-            json.put("netmask", netmask.toString());
-
-            //IS THIS THE RIGHT ARGS THIS NEEDS?????????????????????????????????
-            json.put("peer", fe.getPort());
-            //IS THIS THE RIGHT ARGS THIS NEEDS?????????????????????????????????
-
-            array.put(json);
+            
         }
-
-        dump.put("msg", array);
-
-        return (JSObject) dump;
     }
-
+    }
+    
     @Override
     public void addEntry(ForwardingEntry entry) {
-        this.enteries.add(entry);
-
+        this.entries.add(entry);
+        this.coalesce();
     }
-
+    
     @Override
     public List<ForwardingEntry> lookupRoutes(byte[] destination) {
+        return null;
+    }
+    
+    @Override
+    public String dump() {
         return null;
     }
 }

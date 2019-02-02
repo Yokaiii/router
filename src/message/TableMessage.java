@@ -1,6 +1,6 @@
 package message;
 
-import jdk.nashorn.api.scripting.JSObject;
+import jdk.nashorn.api.scripting.*;
 import routing.*;
 
 /**
@@ -29,7 +29,7 @@ public class TableMessage extends Message {
         }
         this.table = table;
     }
-
+    
     @Override
     JSObject getJSON() {
         return null;

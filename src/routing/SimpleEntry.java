@@ -1,6 +1,5 @@
 package routing;
 
-import jdk.nashorn.api.scripting.*;
 import neighbor.*;
 
 /**
@@ -96,7 +95,7 @@ public class SimpleEntry implements ForwardingEntry {
     }
     
     @Override
-    public JSObject dump() {
+    public String dump() {
         return null;
     }
 }

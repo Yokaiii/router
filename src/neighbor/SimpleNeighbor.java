@@ -33,17 +33,18 @@ public class SimpleNeighbor implements Neighbor {
     }
     
     @Override
-    public NeighborRelation getRelation() {
-        return this.relation;
+    public byte[] getAddress() {
+        return this.address;
     }
     
     @Override
-    public byte[] getAddress() {
-        return this.address;
+    public NeighborRelation getRelation() {
+        return this.relation;
     }
     
     @Override
     public SocketController getSocketController() {
         return this.connection;
     }
+    
 }
