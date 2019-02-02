@@ -1,5 +1,11 @@
 package message;
 
+import jdk.nashorn.api.scripting.JSObject;
+import org.json.JSONObject;
+import sun.security.x509.IPAddressName;
+
+import java.io.IOException;
+
 /**
  * A class to encapsulate a data message
  */
@@ -34,5 +40,31 @@ public class DataMessage extends Message {
      */
     public String getData() {
         return this.data;
+    }
+
+    @Override
+    JSObject getJSON() {
+        JSONObject json = new JSONObject();
+
+        IPAddressName ipsrc = null;
+        IPAddressName ipdest = null;
+
+        try {
+            ipsrc = new IPAddressName(getSource());
+            ipdest = new IPAddressName(getDest());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        JSONObject msgcontent = new JSONObject();
+        msgcontent.put("data", this.data);
+
+        json.put("src", ipsrc.toString());
+        json.put("dst", ipdest.toString());
+        json.put("type", getType().toString());
+        json.put("msg", msgcontent);
+
+        return (JSObject) json;
+
     }
 }

@@ -1,5 +1,7 @@
 package message;
 
+import jdk.nashorn.api.scripting.JSObject;
+
 /**
  * A class to encapsulate a no route message
  */
@@ -20,5 +22,10 @@ public class NoRouteMessage extends Message {
         if (!type.equals(Type.noRoute)) {
             throw new IllegalArgumentException("Cannot create a no route message of a non-noRoute type.");
         }
+    }
+
+    @Override
+    JSObject getJSON() {
+        return null;
     }
 }

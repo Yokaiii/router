@@ -1,5 +1,6 @@
 package message;
 
+import jdk.nashorn.api.scripting.JSObject;
 import routing.*;
 
 /**
@@ -27,5 +28,10 @@ public class TableMessage extends Message {
             throw new IllegalArgumentException("Cannot create a table message of a non-table type.");
         }
         this.table = table;
+    }
+
+    @Override
+    JSObject getJSON() {
+        return null;
     }
 }
