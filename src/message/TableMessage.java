@@ -1,7 +1,11 @@
 package message;
 
 import jdk.nashorn.api.scripting.*;
+import org.json.JSONObject;
 import routing.*;
+import sun.security.x509.IPAddressName;
+
+import java.io.IOException;
 
 /**
  * A class to encapsulate a table message
@@ -32,6 +36,23 @@ public class TableMessage extends Message {
     
     @Override
     JSObject getJSON() {
-        return null;
+        JSONObject json = new JSONObject();
+
+        IPAddressName ipsrc  = null;
+        IPAddressName ipdest = null;
+
+        try {
+            ipsrc = new IPAddressName(getSource());
+            ipdest = new IPAddressName(getDest());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        json.put("src", ipsrc.toString());
+        json.put("dst", ipdest.toString());
+        json.put("type", getType().toString());
+        json.put("msg", getJSON());
+
+        return (JSObject) json;
     }
 }

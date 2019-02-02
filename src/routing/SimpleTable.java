@@ -1,5 +1,10 @@
 package routing;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import sun.security.x509.IPAddressName;
+
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -42,7 +47,33 @@ public class SimpleTable implements ForwardingTable {
     }
     
     @Override
-    public String dump() {
-        return null;
+    public JSONArray dump() {
+
+        JSONObject dump = new JSONObject();
+        JSONArray array = new JSONArray();
+
+
+        for (ForwardingEntry fe : entries) {
+            JSONObject    json   = new JSONObject();
+            IPAddressName network  = null;
+            IPAddressName netmask = null;
+
+            try {
+                network = new IPAddressName(fe.getNetworkPrefix());
+                netmask = new IPAddressName(fe.getNetmask());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            json.put("network", network.toString());
+            json.put("netmask", netmask.toString());
+            json.put("peer", fe.getPort());
+
+            array.put(json);
+
+        }
+
+        return array;
     }
+
 }

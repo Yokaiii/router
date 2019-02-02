@@ -1,5 +1,8 @@
 package routing;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.*;
 
 /**
@@ -29,9 +32,9 @@ public interface ForwardingTable {
     List<ForwardingEntry> lookupRoutes(byte[] destination);
     
     /**
-     * Exports the table to a JSON, in order to be exported in a dump command
+     * Forms the array that makes the msg part of the JSON table
      *
-     * @return the table in a JSON format
+     * @return a JSONArray
      */
-    String dump();
+    JSONArray dump();
 }
